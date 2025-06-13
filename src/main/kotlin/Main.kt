@@ -7,18 +7,16 @@ const val POSTS_ROOT = "../magnus_archives_transcripts/_posts/"
 const val VAULT_ROOT = "../magnus-archives-analysis"
 const val TRANSCRIPT_ROOT = "$VAULT_ROOT/transcripts/"
 const val EPISODE_ROOT = "$VAULT_ROOT/episodes/"
-const val preludes = 3
+
 
 fun main() {
 
-    val startEpisode = 21
-    val numberOfEpisodes = 10
+    val startEpisode = 31
+    val numberOfEpisodes = 2
     val replaceExistingFiles = false
 
-
-    val files = File(POSTS_ROOT).listFiles()!!
-    val drop = preludes + startEpisode -1
-    val rfiles = files.drop(drop).take(numberOfEpisodes)
+    val files = File(POSTS_ROOT).listFiles()!!.filter { it.name.length == 17 }
+    val rfiles = files.drop(startEpisode-1).take(numberOfEpisodes)
 
     rfiles.forEach {
         transformFile(it, replaceExistingFiles)
@@ -134,9 +132,11 @@ fun createAnalysisFile(title: String, episodeNumber: String, replaceExistingFile
         writer.writeLine("statement_of:")
         writer.writeLine("statement_date:")
         writer.writeLine("recorder: Jonathan Sims")
+
         writer.writeLine("event_date:")
         writer.writeLine("event_period:")
         writer.writeLine("event_place:")
+        writer.writeLine("recording_date:")
         writer.writeLine("tags:")
         writer.writeLine("  - \"#analsysis\"")
         writer.writeLine("  - \"#e$episodeNumber\"")
